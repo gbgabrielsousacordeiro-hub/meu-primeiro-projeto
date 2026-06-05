@@ -4,6 +4,9 @@ const prompt = require("prompt-sync")()
 let pontosJogador = 0
 let pontosComputador = 0
 let empates = 0
+let historico = []
+
+
 function mostrarPlacar() {
   console.log(`🏆 Você: ${pontosJogador}`)
   console.log(`🤖 Computador: ${pontosComputador}`)
@@ -12,9 +15,12 @@ function mostrarPlacar() {
 
 const meta = 2
 
+let rodada = 1
+
+
 while (pontosJogador < meta && pontosComputador < meta) {
  
-
+console.log(`🎮 Rodada ${rodada}`) 
 
   const opcoes = ["pedra", "papel", "tesoura"]
 
@@ -41,6 +47,9 @@ while (pontosJogador < meta && pontosComputador < meta) {
 
     console.log("😐 Empate!")
     empates++
+    historico.push(
+      `🎮 Rodada ${rodada} | 😐 Empate| ${escolhaJogador} x ${escolhaComputador}`
+    )
 
   } else if (
     (escolhaJogador === "pedra" && escolhaComputador === "tesoura") ||
@@ -59,6 +68,9 @@ while (pontosJogador < meta && pontosComputador < meta) {
     const fraseAleatoria = frasesVitoria[Math.floor(Math.random() * frasesVitoria.length)]
     
     console.log(fraseAleatoria)
+    historico.push(
+    `🎮 Rodada ${rodada} | 🏆 Vitória | ${escolhaJogador} x ${escolhaComputador}`
+    )
    
     pontosJogador++
 
@@ -75,16 +87,30 @@ while (pontosJogador < meta && pontosComputador < meta) {
     frasesDerrota[Math.floor(Math.random() * frasesDerrota.length)]
     
     console.log(fraseAleatoria)
+    historico.push(
+       `🎮 Rodada ${rodada} | 💀 Derrota | ${escolhaJogador} x ${escolhaComputador}`
+    )
 
     pontosComputador++
 
   }
   
 mostrarPlacar()
+
+
+rodada++
   
 }
 if (pontosJogador > pontosComputador) {
   console.log("🏆 Você venceu o campeonato!")
+  console.log("\n📊 PLACAR FINAL")
+    mostrarPlacar()
+
 } else {
   console.log("🤖 O computador venceu o campeonato!")
+}
+console.log("\n📜 Histórico das rodadas:")
+
+for (const rodadaHistorico of historico) {
+  console.log(rodadaHistorico)
 }
